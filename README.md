@@ -312,3 +312,11 @@ The 'mode' option has not been set, webpack will fallback to 'production' for th
 You can also set it to 'none' to disable any default behavior. Learn more: https://webpack.js.org/configuration/mode/
 mario:hello-webpack arunsah$ 
 ```
+
+## Vue-Notification
+
+### Dependencies
+
+```shell
+npm install --save vue-notification
+```
