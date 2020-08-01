@@ -1,13 +1,45 @@
 <template>
   <div id="app">
     <h2>Vue.js Notification</h2>
- <!-- Velocity animation example -->
-    <notifications group="foo-velocity"
-                   position="bottom right"
-                   animation-type="velocity"
-                   :speed="500" />
+    <!-- Velocity animation example -->
+    <notifications
+      group="foo-velocity"
+      position="bottom right"
+      animation-type="velocity"
+      :speed="500"
+    />
 
-    <div>
+    <!-- Custom template example -->
+    <notifications
+      group="custom-template"
+      :duration="5000"
+      :width="500"
+      animation-name="v-fade-left"
+      position="top left"
+    >
+      <template slot="body" slot-scope="props">
+        <div class="custom-template">
+          <div class="custom-template-icon">
+            <i class="icon ion-android-checkmark-circle"></i>
+          </div>
+          <div class="custom-template-content">
+            <div class="custom-template-title">
+              {{props.item.title}}
+              <p>Random number: {{props.item.data.randomNumber}}</p>
+            </div>
+            <div class="custom-template-text" v-html="props.item.text"></div>
+          </div>
+          <div class="custom-template-close" @click="props.close">
+            <i class="icon ion-android-close"></i>
+          </div>
+        </div>
+      </template>
+    </notifications>
+
+    <!-- Full width example -->
+    <notifications group="full-width" width="100%" />
+
+    <div class="content">
       <button class="success" style="width:30%" @click="show('foo-velocity', 'success')">
         <i class="icon icon-information-circled" /> Success
       </button>
@@ -17,6 +49,17 @@
       <button class="error" style="width:30%" @click="show('foo-velocity', 'error')">
         <i class="icon icon-close-circled" /> Error
       </button>
+
+      <br />
+
+      <p>Custom template:</p>
+      <button @click="show('custom-template')">show top left</button>
+      <p></p>
+      <button @click="clean('custom-template')">
+        <u>clean all</u> top left
+      </button>
+      <p></p>
+      <button @click="show('full-width')">show bottom (full width)</button>
     </div>
   </div>
 </template>
@@ -53,13 +96,12 @@ export default {
         title: `Test ${type} notification #${this.id++}`,
         text,
         type,
-        date: { randomNumber: Math.random() },
+        data: { randomNumber: Math.random() },
       });
     },
-  },
-
-  clean(group) {
-    this.$notify({ group, clean: true });
+    clean(group) {
+      this.$notify({ group, clean: true });
+    },
   },
 };
 </script>
